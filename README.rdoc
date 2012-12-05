@@ -1,0 +1,8 @@
+To reproduce the controller inheritance bug:
+
+1. Start the server
+2. Load http://localhost:3000/broken and then http://localhost:3000/index. The BaseControllers will be inherited correctly - Namespace::BrokenController will inherit Namespace::BaseController and StandardController will inherit BaseController.
+3. Restart the server
+4. Load http://localhost:3000/index and then http://localhost:3000/broken. Namespace::BrokenController will incorrectly inherit BaseController.
+
+In each case, Namespace::WorkingController will correctly inherit Namespace::BaseController. This means that the problem is caused by putting the controller inheritance inside "module Namespace" instead of explicitly stating which BaseController to inherit.
